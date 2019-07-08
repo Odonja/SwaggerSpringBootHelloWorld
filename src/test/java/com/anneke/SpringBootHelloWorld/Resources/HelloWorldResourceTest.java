@@ -1,5 +1,6 @@
 package com.anneke.SpringBootHelloWorld.Resources;
 
+import com.anneke.SpringBootHelloWorld.objects.HelloObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -40,14 +41,15 @@ public class HelloWorldResourceTest {
 
     @Test
     public void personalizedHello() throws Exception{
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/hello/tester")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/rest/hello/tester")
                 .accept(MediaType.APPLICATION_JSON)
                 .content("have a good day")
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         System.out.println(response);
-        assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+        String expected = "{\"name\":\"tester\", \"message\":\"have a good day\"}";
+        JSONAssert.assertEquals(expected, response.getContentAsString(), false);
     }
 
 }
