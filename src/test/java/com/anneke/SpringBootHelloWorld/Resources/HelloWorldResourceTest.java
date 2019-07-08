@@ -27,14 +27,15 @@ public class HelloWorldResourceTest {
 
     @Test
     public void getHelloWorldString() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/helloworld")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rest/helloworld")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-        System.out.println(result.getResponse());
-        String expected = "{\"Hello World\"}";
-        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+        System.out.println("----\n" + result.getResponse().getContentAsString() + "\n----");
+        String expected = "Hello World";
+        assertEquals(expected, result.getResponse().getContentAsString());
+      //  JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
     }
 
     @Test
